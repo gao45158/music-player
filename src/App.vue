@@ -5,16 +5,19 @@
         <div class="header" v-show="this.$route.meta.viewBl">
           <div @click="show" class="head-btn left">我的</div>
           <div class="title">音乐播放器</div>
-          <div class="head-btn right" v-show="name == ''">登录</div>
+          <div class="head-btn right">登录</div>
         </div>
         <router-view></router-view>
       </div>
       <transition name="leftshow">
         <div v-show="leftnav" class="leftnav">
           <div class="mypic">
-            <div class="pic">头像</div>
-            <div class="name" @click="login">
-              <router-link to="/login">{{ name == '' ? '登录 / 注册' : name }}</router-link></div>
+            <div class="pic" v-if="userDetail"><img :src="userDetail.profile.avatarUrl" alt=""></div>
+            <div class="pic" v-else>头像</div>
+            <div class="name" v-if="userDetail">{{ userDetail.profile.nickname }}</div>
+            <div v-else class="name" @click="login">
+              <router-link to="/login">登录 / 注册</router-link>
+            </div>
           </div>
           <div class="navlist">
             <ul class="list">
@@ -23,22 +26,31 @@
               <li class="item">我的最爱</li>
             </ul>
           </div>
-          <button class="logout" v-show="name != ''">退出登录</button>
+          <button class="logout" @click="logout">退出登录</button>
         </div>
       </transition>
     </v-touch>
+    <fPlayView />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import { mapState } from 'vuex'
+import fPlayView from './components/fPlayView'
+
 export default {
   name: 'App',
   data() {
     return {
       screenWidth: document.documentElement.clientHeight,
       leftnav: false,
-      name: ''
+      name: '',
+      pic: ''
     }
+  },
+  computed: {
+    ...mapState(['userDetail'])
   },
   mounted () {
     const that = this
@@ -63,12 +75,18 @@ export default {
     },
     login() {
       this.leftnav = false;
+    },
+    logout() {
+      localStorage.removeItem('myData');
     }
   },
   watch: {
     screenWidth (val) {
       this.screenWidth = val
     }
+  },
+  components: {
+    fPlayView
   }
 }
 </script>
@@ -132,8 +150,14 @@ export default {
         background #fff
         border (f-rem(10px)rem) solid rgba(0, 0, 0, 0.2)
         border-radius 50%
+        overflow hidden
+        img
+          width f-rem(280px)rem
+          height f-rem(280px)rem
       .name
         line-height f-rem(80px)rem
+        a
+          color #e0e0e0
     .navlist
       width 60%
       margin auto
