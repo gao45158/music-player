@@ -1,178 +1,145 @@
 <template>
   <div id="app" class="main">
-    <v-touch @swiperight="show" @swipeleft="hide">
+    <v-touch @swiperight="show(true)" @swipeleft="show(false)" v-show="this.$route.meta.viewBl">
       <div class="main-wapper" ref="main">
-        <div class="header" v-show="this.$route.meta.viewBl">
+        <div class="header">
           <div @click="show" class="head-btn left">我的</div>
           <div class="title">音乐播放器</div>
-          <div class="head-btn right">登录</div>
+          <!-- <div class="head-btn right">搜索</div> -->
         </div>
-        <router-view></router-view>
-      </div>
-      <transition name="leftshow">
-        <div v-show="leftnav" class="leftnav">
-          <div class="mypic">
-            <div class="pic" v-if="userDetail"><img :src="userDetail.profile.avatarUrl" alt=""></div>
-            <div class="pic" v-else>头像</div>
-            <div class="name" v-if="userDetail">{{ userDetail.profile.nickname }}</div>
-            <div v-else class="name" @click="login">
-              <router-link to="/login">登录 / 注册</router-link>
+        <div class="lized">
+            <div class="item" @click="musicl(mpItem.id)" v-for="mpItem in mp">
+              <div class="item-pic"><img :src="mpItem.picUrl" alt=""></div>
             </div>
-          </div>
-          <div class="navlist">
-            <ul class="list">
-              <li class="item">全部音乐</li>
-              <li class="item">最近循环</li>
-              <li class="item">我的最爱</li>
-            </ul>
-          </div>
-          <button class="logout" @click="logout">退出登录</button>
         </div>
-      </transition>
+      </div>
     </v-touch>
-    <fPlayView />
+    <leftnaView :lnav="leftnav" @lnav="leftNav" />
+    <router-view />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
-import fPlayView from './components/fPlayView'
+import { personalized } from './config/api'
+import { getStore, reStore } from './config/cookies'
+import leftnaView from './components/leftnaView'
 
 export default {
   name: 'App',
   data() {
     return {
-      screenWidth: document.documentElement.clientHeight,
-      leftnav: false,
-      name: '',
-      pic: ''
+      screenWidth: document.documentElement.clientHeight, // 获取可视区域初始高度
+      leftnav: false, // 左侧菜单状态
+      mp: null // 获取歌单 前6条数据
     }
-  },
-  computed: {
-    ...mapState(['userDetail'])
   },
   mounted () {
     const that = this
+    const ld = JSON.parse(getStore('loginData'));
+    // resize
     this.screenFun(this);
     window.onresize = () => {
       return (() => {
         that.screenFun(that);
-      })()
-    }
+      })
+    };
+    // 进入页面检验是否存在登录cookies
+    if (ld) {
+      this.$store.dispatch('login', ld);
+    };
+    // 获取推荐歌单
+    axios.get(personalized).then(function (res) {
+      that.mp = res.data.result.slice(0, 6);
+    });
   },
   methods: {
-    show() {
-      this.leftnav = true;
-    },
-    hide() {
-      this.leftnav = false;
+    show(bl) {
+      this.leftnav = bl;
     },
     screenFun(_this) {
       window.screenWidth = document.documentElement.clientHeight;
       _this.screenWidth = window.screenWidth;
       _this.$refs.main.style.height = _this.screenWidth + 'px';
     },
-    login() {
-      this.leftnav = false;
+    musicl(id) {
+      console.log(id);
+      // axios.get(userDetail+`?id=${id}`).then(function (res) { });
     },
-    logout() {
-      localStorage.removeItem('myData');
+    leftNav(data) {
+      this.leftnav = data;
     }
   },
   watch: {
     screenWidth (val) {
-      this.screenWidth = val
+      this.screenWidth = val;
     }
   },
   components: {
-    fPlayView
+    leftnaView
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-@import './common/css/rem'
+  @import './common/css/rem'
 
-.main
-  width 100%
-  .main-wapper
+  .main
     width 100%
-    position relative
-    .header
+    .main-wapper
       width 100%
-      height f-rem(80px)rem
-      line-height f-rem(80px)rem
-      background #676767
-      font-size f-rem(32px)rem
-      color #fff
       position relative
-      z-index 10
-      .head-btn 
-        width f-rem(120px)rem
+      .header
+        width 100%
         height f-rem(80px)rem
-        text-align center
-        display inline-block
-        position absolute
-        top 0
-        font-size f-rem(28px)rem
-        &.left
-          left 0
-        &.right
-          right 0
-      .title 
-        height f-rem(80px)rem
-        padding 0 f-rem(120px)rem
-        text-align center
-        box-sizing border-box
-  .leftshow-enter-active, .leftshow-leave-active
-    transition all 0.5s;
-  .leftshow-enter, .leftshow-leave-to
-    opacity 0 
-    transform translate(-100%, 0)
-  .leftnav
-    width 70%;
-    height 100%;
-    position fixed
-    top 0
-    background #20c7a2
-    z-index 100
-    color #e0e0e0
-    text-align center
-    .mypic
-      width 100%
-      .pic
-        width f-rem(280px)rem
-        height f-rem(280px)rem
-        line-height f-rem(280px)rem
-        font-size f-rem(60px)rem
-        margin (f-rem(100px)rem) auto 0 auto
-        background #fff
-        border (f-rem(10px)rem) solid rgba(0, 0, 0, 0.2)
-        border-radius 50%
-        overflow hidden
-        img
-          width f-rem(280px)rem
-          height f-rem(280px)rem
-      .name
         line-height f-rem(80px)rem
-        a
-          color #e0e0e0
-    .navlist
-      width 60%
-      margin auto
-      .list
-        padding (f-rem(50px)rem) 0
+        background #676767
+        font-size f-rem(32px)rem
+        color #fff
+        position relative
+        z-index 10
+        .head-btn 
+          width f-rem(120px)rem
+          height f-rem(80px)rem
+          text-align center
+          display inline-block
+          position absolute
+          top 0
+          font-size f-rem(28px)rem
+          &.left
+            left 0
+          &.right
+            right 0
+        .title 
+          height f-rem(80px)rem
+          padding 0 f-rem(120px)rem
+          text-align center
+          box-sizing border-box
+      .lized
+        width 100%
+        display flex
+        margin: 0 auto;
+        flex-flow row wrap
+        padding f-rem(15px)rem
+        box-sizing border-box
+        justify-content center
         .item
-          padding (f-rem(32px)rem) 0
-          font-size (f-rem(36px)rem)
-          color #fff
-    .logout
-      width 80%
-      height (f-rem(80px)rem)
-      display inline-block
-      border 0
-      background rgba(255, 255, 255, 1)
-      font-size (f-rem(32px)rem)
-      color #20c7a2
+          display: inline-flex;
+          width 30%
+          flex 1 1 auto
+          padding f-rem(15px)rem
+          box-sizing border-box
+          .item-pic
+            width 100%
+            img 
+              width 100%
+              display inline-block
+              float left
+          // .item-name
+          //   font-size f-rem(24px)rem
+          //   overflow hidden
+          //   white-space nowrap
+          //   text-overflow ellipsis
+          //   height f-rem(40px)rem
+          //   line-height f-rem(40px)rem
 </style>
