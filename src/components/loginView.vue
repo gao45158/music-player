@@ -11,6 +11,7 @@
 
 <script>
 import { getStore } from '../config/cookies'
+import { Toast } from 'mint-ui'
 
 export default {
   name: "loginview",
@@ -27,6 +28,11 @@ export default {
     if (ld) {
       this.$store.dispatch('login', ld);
     }
+    // Toast({
+    //   message: '您未登录，请先登录',
+    //   position: 'top',
+    //   duration: 2000
+    // });
   },
   methods: {
     login() {
@@ -49,7 +55,7 @@ export default {
     left: 0;
     top: 0;
     background: #20c7a2;
-    z-index 102
+    z-index 100
     .login-wapper
       padding 0 (f-rem(120px)rem)
       position fixed
