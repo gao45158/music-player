@@ -11,7 +11,7 @@ import 'mint-ui/lib/style.css'
 Vue.use(MintUI)
 Vue.use(VueTouch, {name: 'v-touch'})
 
-router.beforeEach(function (to, from, next) {
+router.beforeEach((to, from, next) => {
   const nextRoute = ['tplay']; 
   const auth = store.state.loginOf;
   if (nextRoute.indexOf(to.name) >= 0) {  

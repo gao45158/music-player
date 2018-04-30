@@ -15,9 +15,9 @@
         </div>
         <div class="navlist">
           <ul class="list">
-            <li class="item"><router-link to="">全部音乐</router-link></li>
+            <li @click="hide" class="item"><router-link to="/tplay">全部音乐</router-link></li>
             <li @click="hide" class="item"><router-link to="/tplay">最近循环</router-link></li>
-            <li class="item"><router-link to="">我的最爱</router-link></li>
+            <li @click="hide" class="item"><router-link to="/tplay">我的最爱</router-link></li>
           </ul>
         </div>
         <button class="logout" v-show="name" @click="logout">退出登录</button>
@@ -46,8 +46,8 @@
       };
     },
     methods: {
-      hide() {
-        this.$emit('lnav', false);
+      hide() { 
+        this.$emit('lnav', false); 
       },
       logout() {
         reStore('loginData');

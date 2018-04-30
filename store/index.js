@@ -15,21 +15,19 @@ const state = {
 }
 
 const mutations = {
-  loginClick(state) {
-    location.reload();
-  },
-  login(state, ld) {
+  loginClick: state => { location.reload(); },
+  login: (state, ld) => {
     state.loginOf = true;
     state.userProfile = ld;
     router.push({name: 'index'});
   },
-  isPerv() {
+  isPerv: () => {
     router.push({name: 'index'});
   }
 }
 
 const actions = {
-  loginClick({commit}, textData) {
+  loginClick: ({commit}, textData) => {
     if (textData.username === '' && textData.password === '') {
       Toast({
         message: '帐号密码不能为空',
@@ -38,7 +36,7 @@ const actions = {
       });
     } else {
       axios.get(`${userLogin}?phone=${textData.username}&password=${textData.password}`)
-      .then(function (res) {
+      .then(res => {
         if (res.data.code === 200) {
           setStore('loginData', res);
           Toast({
@@ -57,12 +55,8 @@ const actions = {
       })
     }
   },
-  login({commit}, ld) {
-    commit('login', ld);
-  },
-  isPerv({commit}) {
-    commit('isPerv');
-  }
+  login: ({commit}, ld) => { commit('login', ld); },
+  isPerv: ({commit}) => { commit('isPerv'); }
 }
 
 export default new Vuex.Store({

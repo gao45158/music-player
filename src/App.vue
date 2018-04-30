@@ -22,8 +22,7 @@ export default {
   data() {
     return {
       screenWidth: document.documentElement.clientHeight, // 获取可视区域初始高度
-      leftnav: false, // 左侧菜单状态
-      mp: null // 获取歌单 前18条数据
+      leftnav: false // 左侧菜单状态
     }
   },
   mounted () {
@@ -36,7 +35,7 @@ export default {
         that.screenFun(that);
       })
     };
-    // 进入页面检验是否存在登录cookies
+    // 检验cookies
     if (ld) {
       this.$store.dispatch('login', ld);
     };
@@ -48,14 +47,14 @@ export default {
     screenFun(_this) {
       window.screenWidth = document.documentElement.clientHeight;
       _this.screenWidth = window.screenWidth;
-      _this.$refs.main.style.height = _this.screenWidth + 'px';
+      _this.$refs.main.style.minHeight = _this.screenWidth + 'px';
     },
     leftNav(data) {
       this.leftnav = data;
     }
   },
   watch: {
-    screenWidth (val) {
+    screenWidth(val) {
       this.screenWidth = val;
     }
   },
