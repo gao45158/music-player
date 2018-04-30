@@ -57,25 +57,25 @@ export default {
     background: #20c7a2;
     z-index 100
     .login-wapper
-      padding 0 (f-rem(120px)rem)
+      padding 0 f-rem(120)
       position fixed
       left 0
       top 50%
-      margin-top -(f-rem(240px)rem)
+      margin-top -(f-rem(240))
       input 
         width 100%
-        height f-rem(80px)rem
+        height f-rem(80)
         border 0
         background rgba(0, 0, 0, 0.2)
-        margin 0 0 (f-rem(40px)rem) 0
-        padding 0 (f-rem(20px)rem)
+        margin 0 0 f-rem(40) 0
+        padding 0 f-rem(20)
         box-sizing border-box
         color #fff
       button
         width 100%
-        height f-rem(80px)rem
+        height f-rem(80)
         border 0
         background #fff
-        margin 0 0 (f-rem(40px)rem) 0
-        border-radius (f-rem(12px)rem)
+        margin 0 0 f-rem(40) 0
+        border-radius f-rem(12)
 </style>

@@ -70,7 +70,7 @@ export default {
   .main
     width 100%
     .vt
-      width f-rem(28px)rem
+      width f-rem(28)
       height 100%
       position fixed
       left 0
@@ -82,32 +82,32 @@ export default {
       position relative
       .header
         width 100%
-        height f-rem(80px)rem
+        height f-rem(80)
         position fixed
         left 0
         top 0
         z-index 20
-        line-height f-rem(80px)rem
+        line-height f-rem(80)
         background #676767
-        font-size f-rem(32px)rem
+        font-size f-rem(32)
         color #fff
-        box-shadow 0 (f-rem(2px)rem) (f-rem(6px)rem) #000
+        box-shadow 0 f-rem(2) f-rem(6) #000
         .head-btn 
-          width f-rem(120px)rem
-          height f-rem(80px)rem
+          width f-rem(120)
+          height f-rem(80)
           text-align center
           display inline-block
           position absolute
           top 0
-          font-size f-rem(28px)rem
+          font-size f-rem(28)
           &.left
             left 0
           &.right
             right 0
         .title 
           display block
-          height f-rem(80px)rem
-          margin 0 (f-rem(120px)rem)
+          height f-rem(80)
+          margin 0 f-rem(120)
           text-align center
           box-sizing border-box
           color #fff

@@ -17,7 +17,7 @@ export default {
 
   .footer-wapper 
     width 100%
-    height f-rem(100px)rem
+    height f-rem(100)
     background #676767
     position fixed
     left 0

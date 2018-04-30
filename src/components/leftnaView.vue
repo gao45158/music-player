@@ -85,44 +85,44 @@
     z-index 100
     color #e0e0e0
     text-align center
-    box-shadow (f-rem(30px)rem) 0 (f-rem(100px)rem) #000
+    box-shadow f-rem(30) 0 f-rem(100) #000
     .mypic
       width 100%
       .pic
-        width f-rem(280px)rem
-        height f-rem(280px)rem
-        line-height f-rem(280px)rem
-        font-size f-rem(60px)rem
-        margin (f-rem(100px)rem) auto 0 auto
+        width f-rem(280)
+        height f-rem(280)
+        line-height f-rem(280)
+        font-size f-rem(60)
+        margin f-rem(100) auto 0 auto
         background #fff
-        border (f-rem(10px)rem) solid rgba(0, 0, 0, 0.2)
+        border f-rem(10) solid rgba(0, 0, 0, 0.2)
         border-radius 50%
         overflow hidden
         img
-          width f-rem(280px)rem
-          height f-rem(280px)rem
+          width f-rem(280)
+          height f-rem(280)
       .name
-        line-height f-rem(120px)rem
+        line-height f-rem(120)
         a
           color #e0e0e0
     .navlist
       width 60%
       margin auto
       .list
-        padding (f-rem(50px)rem) 0
+        padding f-rem(50) 0
         .item
-          padding (f-rem(32px)rem) 0
-          font-size f-rem(36px)rem
+          padding f-rem(32) 0
+          font-size f-rem(36)
           a
             color #fff
     .logout
       width 80%
-      height f-rem(80px)rem
-      line-height f-rem(80px)rem
-      border-radius f-rem(12px)rem
+      height f-rem(80)
+      line-height f-rem(80)
+      border-radius f-rem(12)
       display inline-block
       border 0
       background rgba(255, 255, 255, 0.8)
-      font-size (f-rem(32px)rem)
+      font-size f-rem(32)
       color #c10d0c
 </style>

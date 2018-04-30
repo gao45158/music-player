@@ -116,7 +116,7 @@
   .page-loadmore
     width 100%
     margin 0 auto
-    padding (f-rem(95px)rem) (f-rem(15px)rem) (f-rem(15px)rem) (f-rem(15px)rem)
+    padding f-rem(95) f-rem(15) f-rem(15) f-rem(15)
     box-sizing border-box
     display flex
     flex-flow row wrap
@@ -139,26 +139,25 @@
       .page-loadmore-desc
         text-align center
         color #666
-        padding-bottom 5px
+        padding-bottom f-rem(10)
       .page-loadmore-desc:last-of-type,
       .page-loadmore-listitem
-        border-bottom 1px solid #eee
         display inline-flex
         width 50%
         flex 1 1 auto
-        padding f-rem(15px)rem
+        padding f-rem(15)
         box-sizing border-box
         .item-pic
           width 100%
-          padding: f-rem(10px)rem;
-          border: 1px solid #ccc;
+          padding  f-rem(12)
+          border f-rem(2) solid #ccc;
           box-sizing border-box
           img 
             width 100%
             display inline-block
             float left
-      .page-loadmore-listitem:first-child
-        border-top 1px solid #eee
+      // .page-loadmore-listitem:first-child
+      //   border-top f-rem(2) solid #eee
       .page-loadmore-wrapper
         overflow scroll
       .mint-loadmore-bottom span
